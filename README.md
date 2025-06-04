@@ -40,6 +40,25 @@ O sistema tentará carregar automaticamente as imagens com diferentes extensões
 4. Digite a resolução na área de texto
 5. A resolução é salva automaticamente
 
+## ⚙️ Painel Administrativo
+
+Para adicionar resoluções permanentes no GitHub Pages:
+
+1. **Clique no botão "⚙️ Admin"** no cabeçalho da página
+2. **Adicione suas resoluções** usando a interface normal
+3. **Exporte em JavaScript** clicando em "📜 JavaScript"
+4. **Copie o código gerado** (é copiado automaticamente)
+5. **Cole no arquivo `resolutions.js`** substituindo o conteúdo
+6. **Faça commit no GitHub** para salvar permanentemente
+7. **As resoluções aparecerão no GitHub Pages** para todos os usuários
+
+### 📤 Funcionalidades do Admin:
+- **📄 JSON**: Exporta em formato JSON
+- **📜 JavaScript**: Gera código para o arquivo resolutions.js
+- **📋 Copiar Tudo**: Copia todas as resoluções em texto
+- **📥 Importar**: Importa resoluções de JSON
+- **🗑️ Limpar Tudo**: Remove todas as resoluções locais
+
 ## ⌚ Otimizações para Smartwatch
 
 - Interface responsiva para telas pequenas (450x450px)

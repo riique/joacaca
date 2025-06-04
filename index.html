@@ -153,6 +153,106 @@
             background: #1976D2;
         }
 
+        .admin-section {
+            background: #2a1a1a;
+            border: 2px solid #4CAF50;
+            border-radius: 8px;
+            padding: 15px;
+            margin-bottom: 20px;
+            display: none;
+        }
+
+        .admin-section.show {
+            display: block;
+        }
+
+        .admin-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 15px;
+            padding-bottom: 10px;
+            border-bottom: 1px solid #4CAF50;
+        }
+
+        .admin-title {
+            color: #4CAF50;
+            font-size: 16px;
+            font-weight: bold;
+        }
+
+        .admin-toggle {
+            background: #4CAF50;
+            color: white;
+            border: none;
+            padding: 6px 12px;
+            border-radius: 4px;
+            font-size: 11px;
+            cursor: pointer;
+        }
+
+        .export-section {
+            margin-bottom: 15px;
+        }
+
+        .export-btn {
+            background: #FF9800;
+            color: white;
+            border: none;
+            padding: 8px 16px;
+            border-radius: 6px;
+            font-size: 12px;
+            cursor: pointer;
+            margin-right: 8px;
+            margin-bottom: 8px;
+        }
+
+        .export-btn:active {
+            background: #F57C00;
+        }
+
+        .import-section {
+            margin-bottom: 15px;
+        }
+
+        .import-input {
+            width: 100%;
+            background: #333;
+            border: 1px solid #555;
+            border-radius: 4px;
+            padding: 8px;
+            color: #fff;
+            font-size: 12px;
+            margin-bottom: 8px;
+        }
+
+        .import-btn {
+            background: #9C27B0;
+            color: white;
+            border: none;
+            padding: 8px 16px;
+            border-radius: 6px;
+            font-size: 12px;
+            cursor: pointer;
+        }
+
+        .import-btn:active {
+            background: #7B1FA2;
+        }
+
+        .output-area {
+            background: #1a1a1a;
+            border: 1px solid #444;
+            border-radius: 4px;
+            padding: 10px;
+            max-height: 200px;
+            overflow-y: auto;
+            font-family: monospace;
+            font-size: 11px;
+            white-space: pre-wrap;
+            word-break: break-all;
+        }
+
         .question-grid {
             display: grid;
             grid-template-columns: repeat(5, 1fr);
@@ -236,6 +336,38 @@
         <div class="header">
             <h1>📚 JoaquimCola</h1>
             <div>Questões e Resoluções</div>
+            <button class="admin-toggle" onclick="toggleAdmin()">⚙️ Admin</button>
+        </div>
+
+        <div id="adminSection" class="admin-section">
+            <div class="admin-header">
+                <div class="admin-title">🔧 Painel Administrativo</div>
+                <button class="admin-toggle" onclick="toggleAdmin()">✖️</button>
+            </div>
+
+            <div class="export-section">
+                <div style="color: #4CAF50; font-size: 14px; margin-bottom: 8px;">📤 Exportar Resoluções:</div>
+                <button class="export-btn" onclick="exportToJSON()">📄 JSON</button>
+                <button class="export-btn" onclick="exportToJS()">📜 JavaScript</button>
+                <button class="export-btn" onclick="copyAllResolutions()">📋 Copiar Tudo</button>
+                <div id="exportOutput" class="output-area" style="display: none;"></div>
+            </div>
+
+            <div class="import-section">
+                <div style="color: #4CAF50; font-size: 14px; margin-bottom: 8px;">📥 Importar Resoluções:</div>
+                <textarea id="importInput" class="import-input" placeholder='Cole aqui o JSON das resoluções, ex: {"1":"Resolução da questão 1","2":"Resolução da questão 2"}' rows="3"></textarea>
+                <button class="import-btn" onclick="importResolutions()">📥 Importar</button>
+                <button class="import-btn" onclick="clearAllResolutions()" style="background: #f44336;">🗑️ Limpar Tudo</button>
+            </div>
+
+            <div style="color: #4CAF50; font-size: 14px; margin-bottom: 8px;">📋 Instruções para GitHub:</div>
+            <div style="font-size: 12px; color: #ccc; line-height: 1.4;">
+                1. Exporte as resoluções em JavaScript<br>
+                2. Copie o código gerado<br>
+                3. Cole no arquivo resolutions.js<br>
+                4. Faça commit no GitHub<br>
+                5. As resoluções aparecerão no GitHub Pages
+            </div>
         </div>
 
         <div class="question-grid">
@@ -269,6 +401,9 @@
         </div>
     </div>
 
+    <!-- Carregar resoluções do arquivo externo (se existir) -->
+    <script src="resolutions.js" onerror="console.log('Arquivo resolutions.js não encontrado - usando localStorage')"></script>
+
     <script>
         let currentQuestionNumber = 1;
         const totalQuestions = 20;
@@ -287,7 +422,7 @@
             const text = document.getElementById('resolutionText').value;
             resolutions[currentQuestionNumber] = text;
             localStorage.setItem('joaquimcola-resolutions', JSON.stringify(resolutions));
-            
+
             // Feedback visual
             const btn = document.querySelector('.save-btn');
             const originalText = btn.textContent;
@@ -297,6 +432,132 @@
                 btn.textContent = originalText;
                 btn.style.background = '#2196F3';
             }, 1000);
+        }
+
+        // Funções do painel administrativo
+        function toggleAdmin() {
+            const adminSection = document.getElementById('adminSection');
+            adminSection.classList.toggle('show');
+        }
+
+        function exportToJSON() {
+            const output = document.getElementById('exportOutput');
+            const jsonData = JSON.stringify(resolutions, null, 2);
+            output.textContent = jsonData;
+            output.style.display = 'block';
+
+            // Copiar para clipboard
+            navigator.clipboard.writeText(jsonData).then(() => {
+                showMessage('JSON copiado para a área de transferência!');
+            });
+        }
+
+        function exportToJS() {
+            const output = document.getElementById('exportOutput');
+            const jsCode = `// Resoluções das questões - JoaquimCola
+// Gerado automaticamente em ${new Date().toLocaleString('pt-BR')}
+
+const resolutionsData = ${JSON.stringify(resolutions, null, 2)};
+
+// Carregar resoluções automaticamente
+if (typeof window !== 'undefined') {
+    // Mesclar com resoluções existentes no localStorage
+    const existingResolutions = JSON.parse(localStorage.getItem('joaquimcola-resolutions') || '{}');
+    const mergedResolutions = { ...resolutionsData, ...existingResolutions };
+    localStorage.setItem('joaquimcola-resolutions', JSON.stringify(mergedResolutions));
+
+    // Recarregar se a página já estiver carregada
+    if (typeof loadResolutions === 'function') {
+        loadResolutions();
+        if (typeof updateDisplay === 'function') {
+            updateDisplay();
+        }
+    }
+}`;
+
+            output.textContent = jsCode;
+            output.style.display = 'block';
+
+            // Copiar para clipboard
+            navigator.clipboard.writeText(jsCode).then(() => {
+                showMessage('Código JavaScript copiado! Cole no arquivo resolutions.js');
+            });
+        }
+
+        function copyAllResolutions() {
+            let text = 'RESOLUÇÕES - JOAQUIMCOLA\\n';
+            text += '='.repeat(30) + '\\n\\n';
+
+            for (let i = 1; i <= totalQuestions; i++) {
+                const resolution = resolutions[i] || '';
+                if (resolution.trim()) {
+                    text += `QUESTÃO ${i}:\\n`;
+                    text += resolution + '\\n\\n';
+                    text += '-'.repeat(20) + '\\n\\n';
+                }
+            }
+
+            navigator.clipboard.writeText(text).then(() => {
+                showMessage('Todas as resoluções copiadas!');
+            });
+        }
+
+        function importResolutions() {
+            const input = document.getElementById('importInput');
+            try {
+                const importedData = JSON.parse(input.value);
+
+                // Validar dados
+                if (typeof importedData !== 'object') {
+                    throw new Error('Formato inválido');
+                }
+
+                // Mesclar com resoluções existentes
+                Object.assign(resolutions, importedData);
+                localStorage.setItem('joaquimcola-resolutions', JSON.stringify(resolutions));
+
+                // Atualizar display
+                updateDisplay();
+                input.value = '';
+
+                showMessage('Resoluções importadas com sucesso!');
+            } catch (error) {
+                showMessage('Erro ao importar: formato JSON inválido!', true);
+            }
+        }
+
+        function clearAllResolutions() {
+            if (confirm('Tem certeza que deseja apagar TODAS as resoluções?')) {
+                Object.keys(resolutions).forEach(key => delete resolutions[key]);
+                localStorage.removeItem('joaquimcola-resolutions');
+                updateDisplay();
+                showMessage('Todas as resoluções foram apagadas!');
+            }
+        }
+
+        function showMessage(message, isError = false) {
+            const messageDiv = document.createElement('div');
+            messageDiv.textContent = message;
+            messageDiv.style.cssText = `
+                position: fixed;
+                top: 20px;
+                left: 50%;
+                transform: translateX(-50%);
+                background: ${isError ? '#f44336' : '#4CAF50'};
+                color: white;
+                padding: 10px 20px;
+                border-radius: 6px;
+                font-size: 12px;
+                z-index: 1000;
+                max-width: 90%;
+                text-align: center;
+            `;
+
+            document.body.appendChild(messageDiv);
+
+            setTimeout(() => {
+                messageDiv.remove();
+            }, 3000);
         }
 
         // Gerar botões das questões
