@@ -1,0 +1,61 @@
+{
+  "1": "Comecemos com a equação quadrática genérica:
+
+\begin{equation}
+ax^2 + bx + c = 0
+\end{equation}
+
+Dividimos toda a equação por \( a \) (assumindo \( a \neq 0 \)):
+
+\begin{equation}
+x^2 + \frac{b}{a}x + \frac{c}{a} = 0
+\end{equation}
+
+Agora, completamos o quadrado. Pegamos o termo \( \frac{b}{a} \), dividimos por 2 e elevamos ao quadrado:
+
+\begin{equation}
+\left( \frac{b}{2a} \right)^2 = \frac{b^2}{4a^2}
+\end{equation}
+
+Somamos e subtraímos esse termo na equação:
+
+\begin{equation}
+x^2 + \frac{b}{a}x + \frac{b^2}{4a^2} - \frac{b^2}{4a^2} + \frac{c}{a} = 0
+\end{equation}
+
+Agrupamos os três primeiros termos como um quadrado perfeito:
+
+\begin{equation}
+\left(x + \frac{b}{2a}\right)^2 - \frac{b^2}{4a^2} + \frac{c}{a} = 0
+\end{equation}
+
+Isolamos o quadrado:
+
+\begin{equation}
+\left(x + \frac{b}{2a}\right)^2 = \frac{b^2}{4a^2} - \frac{c}{a}
+\end{equation}
+
+Colocamos os termos do segundo membro no mesmo denominador:
+
+\begin{equation}
+\left(x + \frac{b}{2a}\right)^2 = \frac{b^2 - 4ac}{4a^2}
+\end{equation}
+
+Tiramos a raiz quadrada de ambos os lados:
+
+\begin{equation}
+x + \frac{b}{2a} = \pm \frac{\sqrt{b^2 - 4ac}}{2a}
+\end{equation}
+
+Isolamos o \( x \):
+
+\begin{equation}
+x = \frac{-b \pm \sqrt{b^2 - 4ac}}{2a}
+\end{equation}
+
+Assim, deduzimos a fórmula de Bhaskara.",
+  "2": "**Equação do 2º Grau**\n\nPara $ax^2 + bx + c = 0$, as raízes são:\n\n$$x = \\frac{-b \\pm \\sqrt{b^2 - 4ac}}{2a}$$\n\nO discriminante é $\\Delta = b^2 - 4ac$:\n- Se $\\Delta > 0$: duas raízes reais distintas\n- Se $\\Delta = 0$: uma raiz real dupla\n- Se $\\Delta < 0$: duas raízes complexas",
+  "3": "**Derivada da Função Exponencial**\n\n$$\\frac{d}{dx}(e^x) = e^x$$\n\n$$\\frac{d}{dx}(a^x) = a^x \\ln(a)$$\n\nRegra da cadeia:\n$$\\frac{d}{dx}(e^{f(x)}) = e^{f(x)} \\cdot f'(x)$$",
+  "4": "**Integral Fundamental**\n\n$$\\int e^x dx = e^x + C$$\n\n$$\\int x^n dx = \\frac{x^{n+1}}{n+1} + C \\quad (n \\neq -1)$$\n\n$$\\int \\frac{1}{x} dx = \\ln|x| + C$$",
+  "5": "**Matriz Identidade 2x2**\n\n$$I = \\begin{pmatrix} 1 & 0 \\\\ 0 & 1 \\end{pmatrix}$$\n\nPropriedade: $AI = IA = A$ para qualquer matriz $A$ compatível.\n\nDeterminante: $\\det(I) = 1$"
+}

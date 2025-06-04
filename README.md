@@ -1,65 +1,69 @@
 # 📚 JoaquimCola - Questões e Resoluções
 
-Uma página web otimizada para smartwatch Samsung Galaxy Watch 6 para visualizar questões e suas resoluções.
+Uma página web otimizada para smartwatch Samsung Galaxy Watch 6 para visualizar resoluções de questões com suporte completo ao LaTeX/KaTeX.
 
 ## 🚀 Funcionalidades
 
 - ✅ Suporte para 20 questões
-- 🖼️ Visualização de imagens das questões
-- ✍️ Área para escrever resoluções
-- 💾 Salvamento automático no navegador
+- 🧮 Renderização completa de LaTeX/KaTeX
 - 📱 Interface otimizada para smartwatch
 - 🎯 Navegação touch-friendly
-- ⚙️ Painel administrativo para gerenciar resoluções
+- 🌐 Carregamento automático do GitHub Pages
+- ⚡ Interface limpa e focada na visualização
 
 ## 📁 Estrutura de Arquivos
 
 ```
 /
 ├── index.html          # Página principal
-├── resolutions.js      # Arquivo com resoluções permanentes
-├── q1.png/jpg/jpeg     # Imagem da questão 1
-├── q2.png/jpg/jpeg     # Imagem da questão 2
-├── ...
-└── q20.png/jpg/jpeg    # Imagem da questão 20
+├── resolutions.json    # Arquivo com resoluções (prioridade)
+└── resolutions.js      # Arquivo alternativo (fallback)
 ```
 
-## 🖼️ Adicionando Imagens
+## 🎮 Como Usar no Smartwatch
 
-Para adicionar imagens das questões, nomeie os arquivos seguindo o padrão:
+1. **Acesse o GitHub Pages** no navegador do smartwatch
+2. **Navegue pelas questões** usando os botões ou grid numérica
+3. **Visualize as resoluções** com LaTeX renderizado perfeitamente
+4. **Use gestos de toque** para navegar facilmente
 
-- `q1.png`, `q1.jpg`, `q1.jpeg` para a questão 1
-- `q2.png`, `q2.jpg`, `q2.jpeg` para a questão 2
-- E assim por diante até `q20.png/jpg/jpeg`
+## 🌐 Carregamento Automático
 
-O sistema tentará carregar automaticamente as imagens com diferentes extensões.
+A página carrega automaticamente as resoluções do GitHub:
+- **Prioridade 1**: `resolutions.json`
+- **Fallback**: `resolutions.js`
+- **Indicador visual** mostra a origem dos dados (🌐 GitHub ou 📱 Local)
 
-## 🎮 Como Usar
+## 💻 Como Adicionar Resoluções
 
-1. Acesse a página no seu smartwatch
-2. Use os botões de navegação ou toque nos números das questões
-3. Visualize a imagem da questão
-4. Digite a resolução na área de texto
-5. A resolução é salva automaticamente
+### **Método 1: Editar resolutions.json diretamente**
 
-## ⚙️ Painel Administrativo
+1. **Edite o arquivo `resolutions.json`** no seu editor favorito
+2. **Adicione resoluções** no formato JSON:
+```json
+{
+  "1": "Resolução da questão 1 com LaTeX: $x^2 + y^2 = z^2$",
+  "2": "Resolução da questão 2 com fração: $\\frac{a}{b} = \\frac{c}{d}$"
+}
+```
+3. **Faça commit no GitHub**
+4. **As resoluções aparecerão automaticamente** no GitHub Pages!
 
-Para adicionar resoluções permanentes no GitHub Pages:
+### **Método 2: Usar interface local (para edição mais fácil)**
 
-1. **Clique no botão "⚙️ Admin"** no cabeçalho da página
-2. **Adicione suas resoluções** usando a interface normal
-3. **Exporte em JavaScript** clicando em "📜 JavaScript"
-4. **Copie o código gerado** (é copiado automaticamente)
-5. **Cole no arquivo `resolutions.js`** substituindo o conteúdo
-6. **Faça commit no GitHub** para salvar permanentemente
-7. **As resoluções aparecerão no GitHub Pages** para todos os usuários
+1. **Abra `index.html` localmente** no seu PC
+2. **Adicione resoluções** usando a interface (salva no localStorage)
+3. **Use ferramentas de desenvolvedor** para exportar o JSON
+4. **Copie para `resolutions.json`** e faça commit
 
-### 📤 Funcionalidades do Admin:
-- **📄 JSON**: Exporta em formato JSON
-- **📜 JavaScript**: Gera código para o arquivo resolutions.js
-- **📋 Copiar Tudo**: Copia todas as resoluções em texto
-- **📥 Importar**: Importa resoluções de JSON
-- **🗑️ Limpar Tudo**: Remove todas as resoluções locais
+## 🧮 **Suporte Completo ao LaTeX/KaTeX:**
+
+- **Fórmulas inline**: `$x^2 + y^2 = z^2$`
+- **Fórmulas em bloco**: `$$\int_{-\infty}^{\infty} e^{-x^2} dx = \sqrt{\pi}$$`
+- **Frações**: `$\frac{a}{b}$`, `$\frac{\partial f}{\partial x}$`
+- **Símbolos**: `$\alpha, \beta, \gamma, \sum, \prod, \int$`
+- **Matrizes**: `$\begin{pmatrix} a & b \\ c & d \end{pmatrix}$`
+- **Quebras de linha**: Use `\n` no JSON para quebras de linha
 
 ## ⌚ Otimizações para Smartwatch
 

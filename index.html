@@ -4,6 +4,15 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
     <title>Questões - JoaquimCola</title>
+
+    <!-- KaTeX CSS -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/katex.min.css" integrity="sha384-GvrOXuhMATgEsSwCs4smul74iXGOixntILdUW9XmUC6+HX0sLNAK3q71HotJqlAn" crossorigin="anonymous">
+
+    <!-- KaTeX JavaScript -->
+    <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/katex.min.js" integrity="sha384-cpW21h6RZv/phavutF+AuVYrr+dA8xD9zs6FwLpaCct6O9ctzYFfFr4dgmgccOTx" crossorigin="anonymous"></script>
+
+    <!-- KaTeX auto-render extension -->
+    <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/contrib/auto-render.min.js" integrity="sha384-+VBxd3r6XgURycqtZ117nYw44OOcIax56Z4dCRWbxyPt0Koah1uHoK0o4+/RRE05" crossorigin="anonymous"></script>
     <style>
         * {
             margin: 0;
@@ -12,246 +21,269 @@
         }
 
         body {
-            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-            background: #000;
-            color: #fff;
+            font-family: 'SF Pro Display', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: linear-gradient(135deg, #0a0a0a 0%, #1a1a2e 50%, #16213e 100%);
+            color: #ffffff;
             overflow-x: hidden;
             font-size: 14px;
-            line-height: 1.4;
+            line-height: 1.5;
+            min-height: 100vh;
+        }
+
+        /* Animações suaves */
+        * {
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
         }
 
         .container {
             max-width: 450px;
             margin: 0 auto;
-            padding: 10px;
+            padding: 15px;
             min-height: 100vh;
+            position: relative;
         }
 
         .header {
             text-align: center;
-            padding: 15px 0;
-            border-bottom: 1px solid #333;
-            margin-bottom: 15px;
+            padding: 20px 0;
+            margin-bottom: 20px;
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(20px);
+            border-radius: 20px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .header::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.1), transparent);
+            animation: shimmer 3s infinite;
+        }
+
+        @keyframes shimmer {
+            0% { left: -100%; }
+            100% { left: 100%; }
         }
 
         .header h1 {
-            font-size: 18px;
-            color: #4CAF50;
-            margin-bottom: 5px;
+            font-size: 22px;
+            background: linear-gradient(135deg, #00f5ff, #4CAF50, #ff6b6b);
+            background-clip: text;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin-bottom: 8px;
+            font-weight: 700;
+            letter-spacing: -0.5px;
+        }
+
+        .header .subtitle {
+            color: rgba(255, 255, 255, 0.7);
+            font-size: 13px;
+            font-weight: 400;
+        }
+
+        .status-indicator {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            padding: 4px 8px;
+            border-radius: 8px;
+            font-size: 10px;
+            font-weight: 600;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .status-indicator.show {
+            opacity: 1;
+        }
+
+        .status-indicator.github {
+            background: linear-gradient(135deg, #4CAF50, #45a049);
+            color: white;
+        }
+
+        .status-indicator.local {
+            background: linear-gradient(135deg, #FF9800, #F57C00);
+            color: white;
         }
 
         .question-nav {
             display: flex;
             justify-content: space-between;
             align-items: center;
-            margin-bottom: 15px;
-            padding: 10px;
-            background: #1a1a1a;
-            border-radius: 8px;
+            margin-bottom: 20px;
+            padding: 15px 20px;
+            background: rgba(255, 255, 255, 0.08);
+            backdrop-filter: blur(20px);
+            border-radius: 25px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
         }
 
         .nav-btn {
-            background: #4CAF50;
+            background: linear-gradient(135deg, #4CAF50, #45a049);
             color: white;
             border: none;
-            padding: 8px 12px;
-            border-radius: 6px;
+            padding: 12px 18px;
+            border-radius: 15px;
             font-size: 14px;
+            font-weight: 600;
             cursor: pointer;
-            min-width: 60px;
+            min-width: 70px;
             touch-action: manipulation;
+            box-shadow: 0 4px 15px rgba(76, 175, 80, 0.3);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .nav-btn::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+            transition: left 0.5s;
+        }
+
+        .nav-btn:hover::before {
+            left: 100%;
         }
 
         .nav-btn:disabled {
-            background: #333;
-            color: #666;
+            background: rgba(255, 255, 255, 0.1);
+            color: rgba(255, 255, 255, 0.4);
+            box-shadow: none;
+            cursor: not-allowed;
         }
 
-        .nav-btn:active {
-            background: #45a049;
+        .nav-btn:active:not(:disabled) {
+            transform: scale(0.95);
+            box-shadow: 0 2px 8px rgba(76, 175, 80, 0.4);
         }
 
         .question-counter {
-            font-size: 16px;
-            font-weight: bold;
-            color: #4CAF50;
+            font-size: 18px;
+            font-weight: 700;
+            background: linear-gradient(135deg, #00f5ff, #4CAF50);
+            background-clip: text;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            text-shadow: 0 0 20px rgba(76, 175, 80, 0.5);
         }
 
         .question-content {
-            background: #1a1a1a;
-            border-radius: 8px;
-            padding: 15px;
-            margin-bottom: 15px;
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(20px);
+            border-radius: 25px;
+            padding: 25px;
+            margin-bottom: 20px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+            position: relative;
+            overflow: hidden;
         }
 
-        .question-image {
-            width: 100%;
-            max-width: 100%;
-            height: auto;
-            border-radius: 6px;
-            margin-bottom: 15px;
-            display: block;
-            background: #333;
-            min-height: 200px;
-            object-fit: contain;
+        .question-content::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 2px;
+            background: linear-gradient(90deg, #00f5ff, #4CAF50, #ff6b6b, #00f5ff);
+            background-size: 200% 100%;
+            animation: gradientMove 3s ease-in-out infinite;
         }
 
-        .no-image {
+        @keyframes gradientMove {
+            0%, 100% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+        }
+
+        .resolution-display {
+            background: rgba(255, 255, 255, 0.95);
+            color: #000;
+            border-radius: 15px;
+            padding: 25px;
+            min-height: 300px;
+            font-size: 14px;
+            line-height: 1.6;
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.2);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            overflow-y: auto;
+            max-height: 500px;
+        }
+
+        .no-resolution {
             display: flex;
+            flex-direction: column;
             align-items: center;
             justify-content: center;
-            background: #333;
-            color: #666;
-            min-height: 200px;
-            border-radius: 6px;
+            color: rgba(0, 0, 0, 0.6);
+            min-height: 250px;
+            text-align: center;
+            line-height: 1.6;
+        }
+
+        .no-resolution .icon {
+            font-size: 48px;
             margin-bottom: 15px;
-            font-size: 12px;
+            opacity: 0.5;
+        }
+
+        .resolution-content {
+            color: #000;
+            line-height: 1.7;
+        }
+
+        .resolution-content h1, .resolution-content h2, .resolution-content h3, .resolution-content h4 {
+            color: #2c3e50;
+            margin: 15px 0 10px 0;
+        }
+
+        .resolution-content strong {
+            color: #2c3e50;
+            font-weight: 600;
+        }
+
+        .resolution-content p {
+            margin-bottom: 12px;
         }
 
         .resolution-section {
-            margin-top: 15px;
+            margin-top: 25px;
+            background: rgba(255, 255, 255, 0.03);
+            border-radius: 20px;
+            padding: 20px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
         }
 
         .resolution-title {
-            font-size: 14px;
-            color: #4CAF50;
-            margin-bottom: 8px;
-            font-weight: bold;
-        }
-
-        .resolution-text {
-            background: #2a2a2a;
-            border: 1px solid #444;
-            border-radius: 6px;
-            padding: 10px;
-            width: 100%;
-            min-height: 100px;
-            color: #fff;
-            font-size: 13px;
-            resize: vertical;
-            font-family: inherit;
-        }
-
-        .resolution-text:focus {
-            outline: none;
-            border-color: #4CAF50;
-        }
-
-        .save-btn {
-            background: #2196F3;
-            color: white;
-            border: none;
-            padding: 8px 16px;
-            border-radius: 6px;
-            font-size: 12px;
-            cursor: pointer;
-            margin-top: 8px;
-            touch-action: manipulation;
-        }
-
-        .save-btn:active {
-            background: #1976D2;
-        }
-
-        .admin-section {
-            background: #2a1a1a;
-            border: 2px solid #4CAF50;
-            border-radius: 8px;
-            padding: 15px;
-            margin-bottom: 20px;
-            display: none;
-        }
-
-        .admin-section.show {
-            display: block;
-        }
-
-        .admin-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 15px;
-            padding-bottom: 10px;
-            border-bottom: 1px solid #4CAF50;
-        }
-
-        .admin-title {
-            color: #4CAF50;
             font-size: 16px;
-            font-weight: bold;
-        }
-
-        .admin-toggle {
-            background: #4CAF50;
-            color: white;
-            border: none;
-            padding: 6px 12px;
-            border-radius: 4px;
-            font-size: 11px;
-            cursor: pointer;
-        }
-
-        .export-section {
+            background: linear-gradient(135deg, #00f5ff, #4CAF50);
+            background-clip: text;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
             margin-bottom: 15px;
+            font-weight: 700;
+            display: flex;
+            align-items: center;
+            gap: 8px;
         }
 
-        .export-btn {
-            background: #FF9800;
-            color: white;
-            border: none;
-            padding: 8px 16px;
-            border-radius: 6px;
-            font-size: 12px;
-            cursor: pointer;
-            margin-right: 8px;
-            margin-bottom: 8px;
-        }
+        /* Estilos removidos - interface simplificada */
 
-        .export-btn:active {
-            background: #F57C00;
-        }
-
-        .import-section {
-            margin-bottom: 15px;
-        }
-
-        .import-input {
-            width: 100%;
-            background: #333;
-            border: 1px solid #555;
-            border-radius: 4px;
-            padding: 8px;
-            color: #fff;
-            font-size: 12px;
-            margin-bottom: 8px;
-        }
-
-        .import-btn {
-            background: #9C27B0;
-            color: white;
-            border: none;
-            padding: 8px 16px;
-            border-radius: 6px;
-            font-size: 12px;
-            cursor: pointer;
-        }
-
-        .import-btn:active {
-            background: #7B1FA2;
-        }
-
-        .output-area {
-            background: #1a1a1a;
-            border: 1px solid #444;
-            border-radius: 4px;
-            padding: 10px;
-            max-height: 200px;
-            overflow-y: auto;
-            font-family: monospace;
-            font-size: 11px;
-            white-space: pre-wrap;
-            word-break: break-all;
-        }
+        /* Estilos de admin e botões removidos - interface simplificada */
 
         .question-grid {
             display: grid;
@@ -335,39 +367,8 @@
     <div class="container">
         <div class="header">
             <h1>📚 JoaquimCola</h1>
-            <div>Questões e Resoluções</div>
-            <button class="admin-toggle" onclick="toggleAdmin()">⚙️ Admin</button>
-        </div>
-
-        <div id="adminSection" class="admin-section">
-            <div class="admin-header">
-                <div class="admin-title">🔧 Painel Administrativo</div>
-                <button class="admin-toggle" onclick="toggleAdmin()">✖️</button>
-            </div>
-
-            <div class="export-section">
-                <div style="color: #4CAF50; font-size: 14px; margin-bottom: 8px;">📤 Exportar Resoluções:</div>
-                <button class="export-btn" onclick="exportToJSON()">📄 JSON</button>
-                <button class="export-btn" onclick="exportToJS()">📜 JavaScript</button>
-                <button class="export-btn" onclick="copyAllResolutions()">📋 Copiar Tudo</button>
-                <div id="exportOutput" class="output-area" style="display: none;"></div>
-            </div>
-
-            <div class="import-section">
-                <div style="color: #4CAF50; font-size: 14px; margin-bottom: 8px;">📥 Importar Resoluções:</div>
-                <textarea id="importInput" class="import-input" placeholder='Cole aqui o JSON das resoluções, ex: {"1":"Resolução da questão 1","2":"Resolução da questão 2"}' rows="3"></textarea>
-                <button class="import-btn" onclick="importResolutions()">📥 Importar</button>
-                <button class="import-btn" onclick="clearAllResolutions()" style="background: #f44336;">🗑️ Limpar Tudo</button>
-            </div>
-
-            <div style="color: #4CAF50; font-size: 14px; margin-bottom: 8px;">📋 Instruções para GitHub:</div>
-            <div style="font-size: 12px; color: #ccc; line-height: 1.4;">
-                1. Exporte as resoluções em JavaScript<br>
-                2. Copie o código gerado<br>
-                3. Cole no arquivo resolutions.js<br>
-                4. Faça commit no GitHub<br>
-                5. As resoluções aparecerão no GitHub Pages
-            </div>
+            <div class="subtitle">Questões e Resoluções com LaTeX</div>
+            <div id="statusIndicator" class="status-indicator">🔄 Carregando...</div>
         </div>
 
         <div class="question-grid">
@@ -383,182 +384,203 @@
         </div>
 
         <div class="question-content">
-            <img id="questionImage" class="question-image" style="display: none;" alt="Questão">
-            <div id="noImagePlaceholder" class="no-image">
-                📷 Imagem não encontrada<br>
-                <small>Adicione q<span id="imageNumber">1</span>.png/jpg/jpeg</small>
-            </div>
-
             <div class="resolution-section">
-                <div class="resolution-title">✍️ Resolução:</div>
-                <textarea 
-                    id="resolutionText" 
-                    class="resolution-text" 
-                    placeholder="Digite a resolução da questão aqui..."
-                ></textarea>
-                <button class="save-btn" onclick="saveResolution()">💾 Salvar</button>
+                <div class="resolution-title">
+                    📝 Questão <span id="currentQuestionTitle">1</span>
+                </div>
+
+                <div class="resolution-display" id="resolutionDisplay">
+                    <div class="no-resolution">
+                        <div class="icon">📖</div>
+                        <div>Nenhuma resolução disponível</div>
+                        <small>Esta questão ainda não foi resolvida</small>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
 
-    <!-- Carregar resoluções do arquivo externo (se existir) -->
-    <script src="resolutions.js" onerror="console.log('Arquivo resolutions.js não encontrado - usando localStorage')"></script>
+    <!-- Carregar resoluções do arquivo JSON (se existir) -->
+    <script>
+        // Detectar se estamos em ambiente local ou GitHub Pages
+        function isLocalEnvironment() {
+            return window.location.protocol === 'file:' || window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1';
+        }
+
+        // Carregar resolutions.json (prioridade) ou resolutions.js (fallback)
+        async function loadExternalResolutions() {
+            const isLocal = isLocalEnvironment();
+
+            if (isLocal) {
+                console.log('💻 Ambiente local detectado - JSON não pode ser carregado via fetch (CORS)');
+                console.log('🌐 Para testar o carregamento do JSON, use um servidor local ou GitHub Pages');
+                return {};
+            }
+
+            console.log('🌐 Ambiente GitHub Pages detectado - tentando carregar resoluções...');
+
+            // PRIORIDADE 1: resolutions.json
+            try {
+                console.log('📄 Tentando carregar resolutions.json...');
+                const response = await fetch('./resolutions.json?t=' + Date.now()); // Cache bust
+                console.log('📄 Response status:', response.status, response.statusText);
+
+                if (response.ok) {
+                    const data = await response.json();
+                    console.log('📄 Dados recebidos:', data);
+
+                    if (data && typeof data === 'object' && Object.keys(data).length > 0) {
+                        console.log('✅ resolutions.json carregado com sucesso!', Object.keys(data).length, 'questões');
+                        return data;
+                    } else {
+                        console.log('⚠️ resolutions.json está vazio ou inválido');
+                    }
+                } else {
+                    console.log('❌ Erro ao carregar resolutions.json:', response.status);
+                }
+            } catch (error) {
+                console.log('❌ Erro ao fazer fetch de resolutions.json:', error);
+            }
+
+            // FALLBACK: resolutions.js
+            try {
+                console.log('📜 Tentando carregar resolutions.js...');
+                await new Promise((resolve, reject) => {
+                    const script = document.createElement('script');
+                    script.src = './resolutions.js?t=' + Date.now(); // Cache bust
+                    script.onload = () => {
+                        console.log('📜 Script resolutions.js carregado');
+                        resolve();
+                    };
+                    script.onerror = (error) => {
+                        console.log('❌ Erro ao carregar script resolutions.js:', error);
+                        reject(error);
+                    };
+                    document.head.appendChild(script);
+                });
+
+                if (typeof resolutionsData !== 'undefined' && Object.keys(resolutionsData).length > 0) {
+                    console.log('✅ resolutions.js carregado com sucesso!', Object.keys(resolutionsData).length, 'questões');
+                    return resolutionsData;
+                } else {
+                    console.log('⚠️ resolutionsData não encontrado ou vazio');
+                }
+            } catch (error) {
+                console.log('❌ Erro ao carregar resolutions.js:', error);
+            }
+
+            console.log('🔍 Nenhum arquivo de resoluções encontrado no GitHub');
+            return {};
+        }
+    </script>
 
     <script>
         let currentQuestionNumber = 1;
         const totalQuestions = 20;
         const resolutions = {};
 
-        // Carregar resoluções salvas do localStorage
-        function loadResolutions() {
-            const saved = localStorage.getItem('joaquimcola-resolutions');
-            if (saved) {
-                Object.assign(resolutions, JSON.parse(saved));
+        // Carregar resoluções: prioriza JSON do GitHub, depois localStorage
+        async function loadResolutions() {
+            let loadedFromExternal = false;
+            const statusIndicator = document.getElementById('statusIndicator');
+            const isLocal = isLocalEnvironment();
+
+            // Mostrar indicador de carregamento
+            statusIndicator.textContent = '🔄 Carregando...';
+            statusIndicator.className = 'status-indicator local show';
+
+            console.log('🚀 Iniciando carregamento de resoluções...');
+
+            // PRIMEIRO: Tentar carregar de arquivos externos (apenas se não for local)
+            if (!isLocal) {
+                try {
+                    const externalData = await loadExternalResolutions();
+                    if (externalData && Object.keys(externalData).length > 0) {
+                        Object.assign(resolutions, externalData);
+                        loadedFromExternal = true;
+                        console.log('✅ Resoluções carregadas do GitHub:', Object.keys(externalData).length, 'questões');
+
+                        // Atualizar indicador visual
+                        statusIndicator.textContent = `🌐 GitHub (${Object.keys(externalData).length})`;
+                        statusIndicator.className = 'status-indicator github show';
+
+                        // Salvar no localStorage como backup
+                        localStorage.setItem('joaquimcola-resolutions', JSON.stringify(resolutions));
+                    } else {
+                        console.log('⚠️ Nenhuma resolução encontrada no GitHub');
+                    }
+                } catch (error) {
+                    console.log('⚠️ Erro ao carregar do GitHub:', error);
+                }
+            } else {
+                console.log('💻 Ambiente local - pulando carregamento externo');
             }
-        }
 
-        // Salvar resolução
-        function saveResolution() {
-            const text = document.getElementById('resolutionText').value;
-            resolutions[currentQuestionNumber] = text;
-            localStorage.setItem('joaquimcola-resolutions', JSON.stringify(resolutions));
+            // SEGUNDO: Se não carregou do GitHub, usar localStorage
+            if (!loadedFromExternal) {
+                const saved = localStorage.getItem('joaquimcola-resolutions');
+                if (saved) {
+                    const localData = JSON.parse(saved);
+                    Object.assign(resolutions, localData);
+                    console.log('📱 Resoluções carregadas do localStorage:', Object.keys(localData).length, 'questões');
 
-            // Feedback visual
-            const btn = document.querySelector('.save-btn');
-            const originalText = btn.textContent;
-            btn.textContent = '✅ Salvo!';
-            btn.style.background = '#4CAF50';
-            setTimeout(() => {
-                btn.textContent = originalText;
-                btn.style.background = '#2196F3';
-            }, 1000);
-        }
+                    // Atualizar indicador visual
+                    const envText = isLocal ? '💻 PC Local' : '📱 Local';
+                    statusIndicator.textContent = `${envText} (${Object.keys(localData).length})`;
+                    statusIndicator.className = 'status-indicator local show';
+                } else {
+                    console.log('📝 Nenhuma resolução encontrada - começando do zero');
 
-        // Funções do painel administrativo
-        function toggleAdmin() {
-            const adminSection = document.getElementById('adminSection');
-            adminSection.classList.toggle('show');
-        }
-
-        function exportToJSON() {
-            const output = document.getElementById('exportOutput');
-            const jsonData = JSON.stringify(resolutions, null, 2);
-            output.textContent = jsonData;
-            output.style.display = 'block';
-
-            // Copiar para clipboard
-            navigator.clipboard.writeText(jsonData).then(() => {
-                showMessage('JSON copiado para a área de transferência!');
-            });
-        }
-
-        function exportToJS() {
-            const output = document.getElementById('exportOutput');
-            const jsCode = `// Resoluções das questões - JoaquimCola
-// Gerado automaticamente em ${new Date().toLocaleString('pt-BR')}
-
-const resolutionsData = ${JSON.stringify(resolutions, null, 2)};
-
-// Carregar resoluções automaticamente
-if (typeof window !== 'undefined') {
-    // Mesclar com resoluções existentes no localStorage
-    const existingResolutions = JSON.parse(localStorage.getItem('joaquimcola-resolutions') || '{}');
-    const mergedResolutions = { ...resolutionsData, ...existingResolutions };
-    localStorage.setItem('joaquimcola-resolutions', JSON.stringify(mergedResolutions));
-
-    // Recarregar se a página já estiver carregada
-    if (typeof loadResolutions === 'function') {
-        loadResolutions();
-        if (typeof updateDisplay === 'function') {
-            updateDisplay();
-        }
-    }
-}`;
-
-            output.textContent = jsCode;
-            output.style.display = 'block';
-
-            // Copiar para clipboard
-            navigator.clipboard.writeText(jsCode).then(() => {
-                showMessage('Código JavaScript copiado! Cole no arquivo resolutions.js');
-            });
-        }
-
-        function copyAllResolutions() {
-            let text = 'RESOLUÇÕES - JOAQUIMCOLA\\n';
-            text += '='.repeat(30) + '\\n\\n';
-
-            for (let i = 1; i <= totalQuestions; i++) {
-                const resolution = resolutions[i] || '';
-                if (resolution.trim()) {
-                    text += `QUESTÃO ${i}:\\n`;
-                    text += resolution + '\\n\\n';
-                    text += '-'.repeat(20) + '\\n\\n';
+                    // Atualizar indicador visual
+                    const envText = isLocal ? '💻 PC Vazio' : '📝 Vazio';
+                    statusIndicator.textContent = envText;
+                    statusIndicator.className = 'status-indicator local show';
                 }
             }
 
-            navigator.clipboard.writeText(text).then(() => {
-                showMessage('Todas as resoluções copiadas!');
-            });
-        }
+            console.log('📊 Total de resoluções carregadas:', Object.keys(resolutions).length);
 
-        function importResolutions() {
-            const input = document.getElementById('importInput');
-            try {
-                const importedData = JSON.parse(input.value);
-
-                // Validar dados
-                if (typeof importedData !== 'object') {
-                    throw new Error('Formato inválido');
-                }
-
-                // Mesclar com resoluções existentes
-                Object.assign(resolutions, importedData);
-                localStorage.setItem('joaquimcola-resolutions', JSON.stringify(resolutions));
-
-                // Atualizar display
-                updateDisplay();
-                input.value = '';
-
-                showMessage('Resoluções importadas com sucesso!');
-            } catch (error) {
-                showMessage('Erro ao importar: formato JSON inválido!', true);
-            }
-        }
-
-        function clearAllResolutions() {
-            if (confirm('Tem certeza que deseja apagar TODAS as resoluções?')) {
-                Object.keys(resolutions).forEach(key => delete resolutions[key]);
-                localStorage.removeItem('joaquimcola-resolutions');
-                updateDisplay();
-                showMessage('Todas as resoluções foram apagadas!');
-            }
-        }
-
-        function showMessage(message, isError = false) {
-            const messageDiv = document.createElement('div');
-            messageDiv.textContent = message;
-            messageDiv.style.cssText = `
-                position: fixed;
-                top: 20px;
-                left: 50%;
-                transform: translateX(-50%);
-                background: ${isError ? '#f44336' : '#4CAF50'};
-                color: white;
-                padding: 10px 20px;
-                border-radius: 6px;
-                font-size: 12px;
-                z-index: 1000;
-                max-width: 90%;
-                text-align: center;
-            `;
-
-            document.body.appendChild(messageDiv);
-
+            // Esconder indicador após 5 segundos
             setTimeout(() => {
-                messageDiv.remove();
-            }, 3000);
+                statusIndicator.classList.remove('show');
+            }, 5000);
         }
+
+        // Função para renderizar resolução com LaTeX
+        function renderResolution(text) {
+            const display = document.getElementById('resolutionDisplay');
+
+            if (!text || text.trim() === '') {
+                display.innerHTML = `
+                    <div class="no-resolution">
+                        <div class="icon">📖</div>
+                        <div>Nenhuma resolução disponível</div>
+                        <small>Esta questão ainda não foi resolvida</small>
+                    </div>
+                `;
+                return;
+            }
+
+            // Converter quebras de linha para HTML
+            const htmlText = text.replace(/\n/g, '<br>');
+
+            display.innerHTML = `<div class="resolution-content">${htmlText}</div>`;
+
+            // Renderizar LaTeX/KaTeX
+            if (typeof renderMathInElement !== 'undefined') {
+                renderMathInElement(display, {
+                    delimiters: [
+                        {left: '$$', right: '$$', display: true},
+                        {left: '$', right: '$', display: false},
+                        {left: '\\(', right: '\\)', display: false},
+                        {left: '\\[', right: '\\]', display: true}
+                    ],
+                    throwOnError: false
+                });
+            }
+        }
+
+        // Funções de admin removidas - interface simplificada
 
         // Gerar botões das questões
         function generateQuestionButtons() {
@@ -587,77 +609,46 @@ if (typeof window !== 'undefined') {
             }
         }
 
-        // Tentar carregar imagem com diferentes extensões
-        function tryLoadImage(questionNumber) {
-            const img = document.getElementById('questionImage');
-            const placeholder = document.getElementById('noImagePlaceholder');
-            const extensions = ['png', 'jpg', 'jpeg', 'gif', 'webp'];
-            let extensionIndex = 0;
-
-            function attemptLoad() {
-                if (extensionIndex >= extensions.length) {
-                    // Nenhuma imagem encontrada
-                    img.style.display = 'none';
-                    placeholder.style.display = 'flex';
-                    document.getElementById('imageNumber').textContent = questionNumber;
-                    return;
-                }
-
-                const extension = extensions[extensionIndex];
-                const imagePath = `q${questionNumber}.${extension}`;
-                
-                img.onload = function() {
-                    img.style.display = 'block';
-                    placeholder.style.display = 'none';
-                };
-                
-                img.onerror = function() {
-                    extensionIndex++;
-                    attemptLoad();
-                };
-                
-                img.src = imagePath;
-            }
-
-            attemptLoad();
-        }
-
         // Atualizar display
         function updateDisplay() {
             // Atualizar contador
             document.getElementById('currentQuestion').textContent = currentQuestionNumber;
-            
+            document.getElementById('currentQuestionTitle').textContent = currentQuestionNumber;
+
             // Atualizar botões de navegação
             document.getElementById('prevBtn').disabled = currentQuestionNumber === 1;
             document.getElementById('nextBtn').disabled = currentQuestionNumber === totalQuestions;
-            
+
             // Atualizar botões da grid
             document.querySelectorAll('.question-btn').forEach((btn, index) => {
                 btn.classList.toggle('active', index + 1 === currentQuestionNumber);
             });
-            
-            // Carregar imagem
-            tryLoadImage(currentQuestionNumber);
-            
-            // Carregar resolução salva
-            const savedResolution = resolutions[currentQuestionNumber] || '';
-            document.getElementById('resolutionText').value = savedResolution;
+
+            // Carregar e renderizar resolução
+            const resolution = resolutions[currentQuestionNumber] || '';
+            renderResolution(resolution);
         }
 
         // Inicializar
-        document.addEventListener('DOMContentLoaded', function() {
-            loadResolutions();
+        document.addEventListener('DOMContentLoaded', async function() {
+            await loadResolutions();
             generateQuestionButtons();
             updateDisplay();
-        });
 
-        // Salvar automaticamente ao digitar (com debounce)
-        let saveTimeout;
-        document.getElementById('resolutionText').addEventListener('input', function() {
-            clearTimeout(saveTimeout);
-            saveTimeout = setTimeout(() => {
-                saveResolution();
-            }, 2000);
+            // Inicializar KaTeX quando carregado
+            if (typeof renderMathInElement !== 'undefined') {
+                console.log('✅ KaTeX carregado com sucesso!');
+            } else {
+                // Aguardar KaTeX carregar
+                const checkKaTeX = setInterval(() => {
+                    if (typeof renderMathInElement !== 'undefined') {
+                        console.log('✅ KaTeX carregado!');
+                        clearInterval(checkKaTeX);
+                        // Re-renderizar a resolução atual com KaTeX
+                        updateDisplay();
+                    }
+                }, 100);
+            }
         });
 
         // Navegação por teclado
