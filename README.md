@@ -10,12 +10,14 @@ Uma página web otimizada para smartwatch Samsung Galaxy Watch 6 para visualizar
 - 💾 Salvamento automático no navegador
 - 📱 Interface otimizada para smartwatch
 - 🎯 Navegação touch-friendly
+- ⚙️ Painel administrativo para gerenciar resoluções
 
 ## 📁 Estrutura de Arquivos
 
 ```
 /
 ├── index.html          # Página principal
+├── resolutions.js      # Arquivo com resoluções permanentes
 ├── q1.png/jpg/jpeg     # Imagem da questão 1
 ├── q2.png/jpg/jpeg     # Imagem da questão 2
 ├── ...
